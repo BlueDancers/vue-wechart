@@ -65,6 +65,24 @@ export default {
             success: res => {
               console.log(res)
               this.userInfo = res.userInfo
+              wx.request({
+                url: 'http://localhost:3000/login',
+                data: {
+                  'res': res
+                },
+                method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                // header: {}, // 设置请求的 header
+                success: function(res){
+                  console.log('数据传输成功');
+                },
+                fail: function() {
+                  console.log('失败');
+
+                },
+                complete: function() {
+                  // complete
+                }
+              })
             }
           })
         }

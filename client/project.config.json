@@ -11,7 +11,7 @@
 	"miniprogramRoot": "dist/",
 	"compileType": "miniprogram",
 	"appid": "wx7716604375333b3b",
-	"projectname": "my-project",
+	"projectname": "vue-wechat",
 	"condition": {
 		"search": {
 			"current": -1,
