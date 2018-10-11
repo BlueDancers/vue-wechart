@@ -68,12 +68,13 @@ export default {
               wx.request({
                 url: 'http://localhost:3000/login',
                 data: {
-                  'res': res
+                  'res': res,
+                  'code': result.code
                 },
                 method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
                 // header: {}, // 设置请求的 header
                 success: function(res){
-                  console.log('数据传输成功');
+                  console.log(res);
                 },
                 fail: function() {
                   console.log('失败');
@@ -103,7 +104,9 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-
+.user-motto:active {
+  opacity: 0;
+}
 .userinfo-avatar {
   width: 128rpx;
   height: 128rpx;
