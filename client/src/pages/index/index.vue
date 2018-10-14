@@ -24,14 +24,15 @@
 </template>
 
 <script>
-import card from '@/components/card'
-
+import card from "@/components/card";
+import loginSDK from "../../utils/login.js";
+import config from "../../utils/config.js";
 export default {
   data() {
     return {
-      motto: 'Hello World',
+      motto: "Hello World",
       userInfo: {}
-    }
+    };
   },
 
   components: {
@@ -40,62 +41,41 @@ export default {
 
   methods: {
     bindViewTap() {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
+      const url = "../logs/main";
+      wx.navigateTo({ url });
     },
     getUserInfo() {
       // 调用登录接口
       wx.checkSession({
         success: function(e) {
-          console.log('登录状态')
+          console.log("登录状态");
         },
         fail: () => {
-          console.log('未登录状态')
+          console.log("未登录状态");
         }
-      })
+      });
     },
     clickHandle(msg, ev) {
       //console.log('clickHandle:', msg, ev)
     },
-    onGotUserInfo() {
-      wx.login({
-        success: result => {
-          console.log(result)
-          wx.getUserInfo({
-            success: res => {
-              console.log(res)
-              this.userInfo = res.userInfo
-              wx.request({
-                url: 'http://localhost:3000/login',
-                data: {
-                  'res': res,
-                  'code': result.code
-                },
-                method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-                // header: {}, // 设置请求的 header
-                success: function(res){
-                  console.log(res);
-                },
-                fail: function() {
-                  console.log('失败');
-
-                },
-                complete: function() {
-                  // complete
-                }
-              })
-            }
-          })
+    async onGotUserInfo() {
+      loginSDK.setLoginUrl(config.loginUrl);
+      loginSDK.login({
+        success: res => {
+          console.log(res);
+        },
+        fail: err => {
+          console.log(err);
         }
-      })
+      });
     }
   },
 
   created() {
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+    this.getUserInfo();
   }
-}
+};
 </script>
 
 <style scoped>
