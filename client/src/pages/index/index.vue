@@ -62,7 +62,7 @@ export default {
       loginSDK.setLoginUrl(config.loginUrl);
       loginSDK.login({
         success: res => {
-          console.log(res);
+          console.log(res,'login');
         },
         fail: err => {
           console.log(err);
