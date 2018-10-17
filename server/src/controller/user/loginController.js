@@ -20,9 +20,8 @@ let login = async (ctx) => {
     })
     .then((result) => {
       var pc = new WXBizDataCrypt(config.appid, result.data.session_key)
-      var userInfo = pc.decryptData(data, iv)
+      var userInfo = pc.decryptData(data, iv) // 解密
       console.log(userInfo);
-
       return userInfo
     })
     .then(userInfo => {
