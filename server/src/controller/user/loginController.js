@@ -34,7 +34,7 @@ const WXBizDataCrypt = require('../../utils/WXBizDataCrypt')
 
 let login = async (ctx) => {
   console.log(ctx.headers);
-  
+
   const {
     code
   } = ctx.headers
@@ -42,8 +42,9 @@ let login = async (ctx) => {
   const {
     userInfo
   } = ctx.request.body
-  console.log(userInfo);
   
+  console.log(userInfo);
+
   await axios.get('https://api.weixin.qq.com/sns/jscode2session', {
       params: {
         appid: config.appid,
@@ -53,16 +54,6 @@ let login = async (ctx) => {
       }
     })
     .then((result) => {
-<<<<<<< HEAD
-      var pc = new WXBizDataCrypt(config.appid, result.data.session_key)
-      var userInfo = pc.decryptData(data, iv) // 解密
-      console.log(userInfo);
-      return userInfo
-    })
-    .then(userInfo => {
-=======
-      console.log(result.data);
->>>>>>> fbbec6799836e6bef7c85b2f5daf236e7bbf96b1
       ctx.state = {
         code: 1,
         data: result.data
