@@ -55,6 +55,8 @@ function login(options) {
     if (err) {
       options.fail(err)
     }
+    console.log(loginResult.userInfo,'用户信息');
+    
     // 设置登录请求头
     const header = {
       code: loginResult.code,
@@ -66,14 +68,12 @@ function login(options) {
       url: options.loginUrl,
       method: options.methods,
       header,
+      data: {
+        'userInfo': loginResult.userInfo
+      },
       success: function (result) {
-        console.log(result,'result');
         const data = result.data
-        console.log(data,'result');
-        
         // 这里都是代码/环境问题
-        console.log(data.code !== 0 || data.data);
-        
         if (!data || data.code == 0 || !data.data) {
           return options.fail(new Error(`响应错误,${JSON.stringify(data)}`))
         }
@@ -84,7 +84,7 @@ function login(options) {
         // }
         // 登录成功
         // Session.set(res)
-        options.success(data.data.openId)
+        options.success(data.data)
       },
       fail: function () {
         console.error('登录失败，可能是网络错误或者服务器发生异常')
