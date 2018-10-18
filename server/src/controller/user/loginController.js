@@ -1,7 +1,8 @@
 const axios = require('axios')
 const config = require('../../config/config')
+const addUser =require('../../models/userModel').addUser
 const WXBizDataCrypt = require('../../utils/WXBizDataCrypt')
-
+// const user = require('../../')
 
 // let login = async (ctx) => {
 //   const {
@@ -33,8 +34,6 @@ const WXBizDataCrypt = require('../../utils/WXBizDataCrypt')
 // }
 
 let login = async (ctx) => {
-  console.log(ctx.headers);
-
   const {
     code
   } = ctx.headers
@@ -42,9 +41,6 @@ let login = async (ctx) => {
   const {
     userInfo
   } = ctx.request.body
-  
-  console.log(userInfo);
-
   await axios.get('https://api.weixin.qq.com/sns/jscode2session', {
       params: {
         appid: config.appid,
@@ -58,6 +54,16 @@ let login = async (ctx) => {
         code: 1,
         data: result.data
       }
+      return result
+    })
+    .then((result) => {
+      let openid = result.data.openid
+      addUser(openid, userInfo)
+      .then((res) => {
+        console.log(res,'数据库返回');
+        
+      })
+      return result
     })
 }
 
